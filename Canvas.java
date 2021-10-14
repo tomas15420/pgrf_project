@@ -4,12 +4,10 @@ import model.Polygon;
 import rasterize.*;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +30,12 @@ public class Canvas {
 	private Raster raster;
 	private LineRasterizer lineRasterizer;
 	private DottedLineRasterizer dottedLineRasterizer;
+	private Polygon polygon = new Polygon();
+	private Line[] tempLine = new Line[2];
 
 	public Canvas(int width, int height) {
 		frame = new JFrame();
-		Polygon polygon = new Polygon();
+
 
 		frame.setLayout(new BorderLayout());
 		frame.setTitle("UHK FIM PGRF : " + this.getClass().getName());
@@ -76,10 +76,7 @@ public class Canvas {
 						}
 					}
 				}
-				clear();
-				lineRasterizer.rasterize(polygon);
-
-				panel.repaint();
+				redraw();
 			}
 		});
 
@@ -90,22 +87,22 @@ public class Canvas {
 				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight()){
 					List<Point> points = polygon.getPoints();
 					if(points.size() == 0) return;
-					clear();
 
 					Point point = new Point(e.getX(),e.getY());
 
 					int x1 = points.get(points.size()-1).getX();
 					int y1 = points.get(points.size()-1).getY();
 
-					Line line = new Line(x1,y1,point.getX(),point.getY());
+					tempLine[0] = new Line(x1,y1,point.getX(),point.getY(),0x00FFFF);
 
-					dottedLineRasterizer.rasterize(new Line(x1,y1,point.getX(),point.getY(),0x00FFFF));
 					x1 = points.get(0).getX();
 					y1 = points.get(0).getY();
 
-					dottedLineRasterizer.rasterize(new Line(x1,y1,point.getX(),point.getY(),0x00FFFF));
-					lineRasterizer.rasterize(polygon);
-					panel.repaint();
+					tempLine[1] = new Line(x1,y1,point.getX(),point.getY(),0x00FFFF);
+
+					redraw();
+
+					tempLine = new Line[2];
 				}
 			}
 		});
@@ -114,13 +111,30 @@ public class Canvas {
 		panel.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_C){
-					polygon.reset();
-					clear();
-					panel.repaint();
+				switch(e.getKeyCode()){
+					case KeyEvent.VK_C:{
+						polygon.reset();
+						redraw();
+						break;
+					}
+					case KeyEvent.VK_T:{
+						redraw();
+						break;
+					}
 				}
 			}
 		});
+	}
+
+	private void redraw(){
+		clear();
+		lineRasterizer.rasterize(polygon);
+		for(Line line : tempLine){
+			if(line != null){
+				dottedLineRasterizer.rasterize(line);
+			}
+		}
+		panel.repaint();
 	}
 
 	public void clear() {
@@ -132,27 +146,7 @@ public class Canvas {
 		graphics.drawImage(img, 0, 0, null);
 	}
 
-	public void draw() {
-		clear();
-		lineRasterizer.rasterize(10,10,50,10,0xFFFF00);
-		lineRasterizer.rasterize(new Line(10,30,50,30,0xFF0000));
-
-		Polygon pol = new Polygon();
-		pol.addPoint(new Point(50,100));
-		pol.addPoint(new Point(150,250));
-		pol.addPoint(new Point(100,10));
-
-		lineRasterizer.rasterize(pol);
-	}
-
-	/*
-		DÚ:
-		CanvasMouse
-
-	 */
-
 	public void start() {
-		draw();
 		panel.repaint();
 	}
 
