@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3a409ad6-943f-4e58-adf8-d26330adce95" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/Canvas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/CanvasKey.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/CanvasMouse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/CanvasMouseResize.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/CanvasMouseResizeRepaint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/CanvasRasterBufferedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/model/Line.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/model/Point.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/model/Polygon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/rasterize/LineRasterizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/rasterize/LineRasterizerGraphics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/rasterize/PolygonRasterizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/rasterize/Raster.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/rasterize/RasterBufferedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/view/Panel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/view/Window.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/app/AppStart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/control/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/control/Controller2D.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/fill/Filler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/fill/PatternFill.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/fill/ScanLine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/fill/SeedFill.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/fill/SeedFillBorder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/model/Line.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/model/Point.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/model/Polygon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/rasterize/LineRasterizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/rasterize/LineRasterizerGraphics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/rasterize/PolygonRasterizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/rasterize/Raster.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/rasterize/RasterBufferedImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/view/Panel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2/src/view/Window.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1z5STqo4jXp5lJiuD2iZIbwVOvN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="rasterize" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.CanvasMouse">
+    <configuration name="Canvas" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Canvas" />
+      <module name="task1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CanvasMouse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CanvasMouse" />
+      <module name="task1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CanvasMouseResize" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CanvasMouseResize" />
+      <module name="task1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CanvasMouseResizeRepaint" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CanvasMouseResizeRepaint" />
+      <module name="task1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CanvasRasterBufferedImage" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="CanvasRasterBufferedImage" />
+      <module name="task1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.CanvasMouse" />
+        <item itemvalue="Application.Canvas" />
+        <item itemvalue="Application.CanvasMouseResize" />
+        <item itemvalue="Application.CanvasMouseResizeRepaint" />
+        <item itemvalue="Application.CanvasRasterBufferedImage" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a409ad6-943f-4e58-adf8-d26330adce95" name="Changes" comment="" />
+      <created>1633436467102</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633436467102</updated>
+      <workItem from="1633436468493" duration="658000" />
+      <workItem from="1633445428957" duration="3141000" />
+      <workItem from="1633501041789" duration="4642000" />
+      <workItem from="1633889405095" duration="1000" />
+      <workItem from="1633889424057" duration="5000" />
+      <workItem from="1634022429764" duration="235000" />
+      <workItem from="1634022874070" duration="210000" />
+      <workItem from="1634032046243" duration="503000" />
+      <workItem from="1634049608002" duration="3386000" />
+      <workItem from="1634053302022" duration="463000" />
+      <workItem from="1634105213019" duration="4314000" />
+      <workItem from="1634212689139" duration="23000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
