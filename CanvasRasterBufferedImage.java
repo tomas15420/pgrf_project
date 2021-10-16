@@ -1,4 +1,4 @@
-import rasterize.LineRasterizerGraphics;
+import rasterize.FilledLineRasterizer;
 import rasterize.RasterBufferedImage;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class CanvasRasterBufferedImage {
 	private JPanel panel;
 	private RasterBufferedImage raster;
 	private int x,y;
-	private LineRasterizerGraphics rasterizer;
+	private FilledLineRasterizer rasterizer;
 
 	public CanvasRasterBufferedImage(int width, int height) {
 		JFrame frame = new JFrame();
@@ -29,7 +29,7 @@ public class CanvasRasterBufferedImage {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		raster = new RasterBufferedImage(width, height);
-		rasterizer = new LineRasterizerGraphics(raster);
+		rasterizer = new FilledLineRasterizer(raster);
 		panel = new JPanel() {
 			private static final long serialVersionUID = 1L;
 
@@ -85,7 +85,7 @@ public class CanvasRasterBufferedImage {
 
 				newRaster.draw(raster);
 				raster = newRaster;
-				rasterizer = new LineRasterizerGraphics(raster);
+				rasterizer = new FilledLineRasterizer(raster);
 
 			}
 		});

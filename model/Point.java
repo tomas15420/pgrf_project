@@ -14,6 +14,10 @@ public class Point {
         this.y = (int) Math.round(y);
     }
 
+    public int getDistance(Point point){
+        return (int) Math.abs(Math.sqrt(Math.pow(point.getX()-getX(),2)+Math.pow(point.getY()-getY(),2)));
+    }
+
     public int getX() {
         return x;
     }
@@ -28,5 +32,10 @@ public class Point {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%d,%d]",getX(),getY());
     }
 }

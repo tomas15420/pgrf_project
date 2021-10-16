@@ -6,9 +6,15 @@ import java.awt.*;
 
 public class DottedLineRasterizer extends LineRasterizer {
 
+    private int space = 2;
 
     public DottedLineRasterizer(Raster raster) {
         super(raster);
+    }
+
+    public DottedLineRasterizer(Raster raster, int space){
+        super(raster);
+        this.space = space;
     }
 
     @Override
@@ -16,6 +22,14 @@ public class DottedLineRasterizer extends LineRasterizer {
         Graphics g = ((RasterBufferedImage)raster).getImg().getGraphics();
         g.setColor(this.color);
         g.drawLine(x1, y1, x2, y2);
+    }
+
+    public int getSpace() {
+        return space;
+    }
+
+    public void setSpace(int space) {
+        this.space = space;
     }
 
     @Override
@@ -32,7 +46,7 @@ public class DottedLineRasterizer extends LineRasterizer {
                 y1 = y2;
                 y2 = pam;
             }
-            for (int x = x1; x <= x2; x += 2) {
+            for (int x = x1; x <= x2; x += space) {
                 int y = (int) (k * x + q);
                 raster.setPixel(x, y, color);
             }
@@ -45,10 +59,12 @@ public class DottedLineRasterizer extends LineRasterizer {
                 y1 = y2;
                 y2 = pam;
             }
-            for(int y = y1; y <= y2; y +=2) {
+            for(int y = y1; y <= y2; y += space) {
                 int x = (int)((y-q)/k);
                 raster.setPixel(x,y,color);
             }
         }
+
+
     }
 }

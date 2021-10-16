@@ -1,11 +1,10 @@
 
 import rasterize.LineRasterizer;
-import rasterize.LineRasterizerGraphics;
+import rasterize.FilledLineRasterizer;
 import rasterize.Raster;
 import rasterize.RasterBufferedImage;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -41,7 +40,7 @@ public class CanvasMouse {
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		raster = new RasterBufferedImage(width, height);
-		lineRasterizer = new LineRasterizerGraphics(raster);
+		lineRasterizer = new FilledLineRasterizer(raster);
 
 		panel = new JPanel() {
 			private static final long serialVersionUID = 1L;

@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -18,7 +17,7 @@ import javax.swing.WindowConstants;
 
 /**
  * trida pro kresleni na platno: zobrazeni pixelu
- * 
+ *
  * @author PGRF FIM UHK
  * @version 2020
  */
@@ -32,6 +31,7 @@ public class Canvas {
 	private DottedLineRasterizer dottedLineRasterizer;
 	private Polygon polygon = new Polygon();
 	private Line[] tempLine = new Line[2];
+	private Point editPoint;
 
 	public Canvas(int width, int height) {
 		frame = new JFrame();
@@ -45,8 +45,9 @@ public class Canvas {
 		//img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
 		raster = new RasterBufferedImage(width, height);
-		lineRasterizer = new LineRasterizerGraphics(raster);
-		dottedLineRasterizer = new DottedLineRasterizer(raster);
+		lineRasterizer = new FilledLineRasterizer(raster);
+		dottedLineRasterizer = new DottedLineRasterizer(raster,3);
+
 
 
 		panel = new JPanel() {
@@ -66,17 +67,42 @@ public class Canvas {
 		frame.setVisible(true);
 
 		panel.addMouseListener(new MouseAdapter() {
+			List<Point> points = polygon.getPoints();
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight()){
+					Point mousePoint = new Point(e.getX(),e.getY());
 					switch (e.getButton()){
 						case MouseEvent.BUTTON1: {
 							polygon.addPoint(new Point(e.getX(),e.getY()));
 							break;
 						}
+						case MouseEvent.BUTTON2:{
+							if(points.size() == 0 || editPoint == null) return;
+							polygon.setPoint(mousePoint,points.indexOf(editPoint));
+							editPoint = null;
+							break;
+						}
+						case MouseEvent.BUTTON3:{
+							if(points.size() == 0) return;
+							polygon.addPoint(mousePoint,(points.indexOf(polygon.findNearestPoint(mousePoint))+1)%points.size());
+							break;
+						}
 					}
 				}
 				redraw();
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight()) {
+
+					Point mousePoint = new Point(e.getX(),e.getY());
+
+					if (e.getButton() == MouseEvent.BUTTON2) {
+						if(points.size() == 0) return;
+						editPoint = polygon.findNearestPoint(mousePoint);
+					}
+				}
 			}
 		});
 
@@ -88,17 +114,22 @@ public class Canvas {
 					List<Point> points = polygon.getPoints();
 					if(points.size() == 0) return;
 
-					Point point = new Point(e.getX(),e.getY());
+					Point pointA = points.get(0);
+					if(editPoint != null){
+						pointA = editPoint;
+					}
 
-					int x1 = points.get(points.size()-1).getX();
-					int y1 = points.get(points.size()-1).getY();
+					Point pointB = points.get(points.size()-1);
+					Point mousePoint = new Point(e.getX(),e.getY());
 
-					tempLine[0] = new Line(x1,y1,point.getX(),point.getY(),0x00FFFF);
+					if(e.getModifiersEx() == MouseEvent.BUTTON3_DOWN_MASK){
+						pointA = polygon.findNearestPoint(mousePoint);
+						pointB = points.get((points.indexOf(pointA)+1)%points.size());
+					}
 
-					x1 = points.get(0).getX();
-					y1 = points.get(0).getY();
-
-					tempLine[1] = new Line(x1,y1,point.getX(),point.getY(),0x00FFFF);
+					tempLine[0] = new Line(pointA,mousePoint,0x00FFFF);
+					if(e.getModifiersEx() != MouseEvent.BUTTON2_DOWN_MASK)
+						tempLine[1] = new Line(pointB,mousePoint,0x00FFFF);
 
 					redraw();
 
@@ -118,7 +149,22 @@ public class Canvas {
 						break;
 					}
 					case KeyEvent.VK_T:{
-						redraw();
+						List<Point> points = polygon.getPoints();
+						if(points.size() == 2){
+							Point a = points.get(0);
+							Point b = points.get(1);
+
+							int diameter = a.getDistance(b);
+							int radius = diameter/2;
+							Point center = new Point((b.getX()+a.getX())/2,(b.getY()+a.getY())/2);
+
+							polygon.addPoint(new Point(center.getX(),center.getY()+radius));
+							clear();
+							lineRasterizer.rasterize(polygon);
+							BufferedImage img = ((RasterBufferedImage)raster).getImg();
+							img.getGraphics().drawOval(center.getX()-radius,center.getY()-radius,diameter,diameter);
+							panel.repaint();
+						}
 						break;
 					}
 				}
@@ -129,6 +175,7 @@ public class Canvas {
 	private void redraw(){
 		clear();
 		lineRasterizer.rasterize(polygon);
+
 		for(Line line : tempLine){
 			if(line != null){
 				dottedLineRasterizer.rasterize(line);
