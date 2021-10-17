@@ -14,7 +14,7 @@ public class Point {
         this.y = (int) Math.round(y);
     }
 
-    public int getDistance(Point point){
+    public int getDistanceToPoint(Point point){
         return (int) Math.abs(Math.sqrt(Math.pow(point.getX()-getX(),2)+Math.pow(point.getY()-getY(),2)));
     }
 
@@ -34,6 +34,9 @@ public class Point {
         this.y = y;
     }
 
+    public boolean equals(Point point){
+        return point.getX() == x && point.getY() == y;
+    }
     @Override
     public String toString() {
         return String.format("[%d,%d]",getX(),getY());

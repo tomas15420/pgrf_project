@@ -3,9 +3,7 @@ import model.Point;
 import model.Polygon;
 import rasterize.*;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -85,7 +83,16 @@ public class Canvas {
 						}
 						case MouseEvent.BUTTON3:{
 							if(points.size() == 0) return;
-							polygon.addPoint(mousePoint,(points.indexOf(polygon.findNearestPoint(mousePoint))+1)%points.size());
+							Line line = polygon.getNearestLineToPoint(mousePoint);
+							Point addPoint;
+							if(line != null){
+								addPoint = line.getPoint2();
+							}
+							else{
+								addPoint = points.get(0);
+							}
+
+							polygon.addPoint(mousePoint,points.indexOf(addPoint));
 							break;
 						}
 					}
@@ -94,13 +101,12 @@ public class Canvas {
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight()) {
+				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight() && points.size() != 0) {
 
 					Point mousePoint = new Point(e.getX(),e.getY());
 
 					if (e.getButton() == MouseEvent.BUTTON2) {
-						if(points.size() == 0) return;
-						editPoint = polygon.findNearestPoint(mousePoint);
+						editPoint = polygon.getNearestPoint(mousePoint);
 					}
 				}
 			}
@@ -123,8 +129,9 @@ public class Canvas {
 					Point mousePoint = new Point(e.getX(),e.getY());
 
 					if(e.getModifiersEx() == MouseEvent.BUTTON3_DOWN_MASK){
-						pointA = polygon.findNearestPoint(mousePoint);
-						pointB = points.get((points.indexOf(pointA)+1)%points.size());
+						Line nearestLine = polygon.getNearestLineToPoint(mousePoint);
+						pointA = nearestLine.getPoint1();
+						pointB = nearestLine.getPoint2();
 					}
 
 					tempLine[0] = new Line(pointA,mousePoint,0x00FFFF);
@@ -154,11 +161,17 @@ public class Canvas {
 							Point a = points.get(0);
 							Point b = points.get(1);
 
-							int diameter = a.getDistance(b);
+							int diameter = a.getDistanceToPoint(b);
 							int radius = diameter/2;
-							Point center = new Point((b.getX()+a.getX())/2,(b.getY()+a.getY())/2);
+							Point center = new Line(a,b).getCenterPoint();
 
-							polygon.addPoint(new Point(center.getX(),center.getY()+radius));
+//							Point mousePoint = new Point(MouseInfo.getPointerInfo().getLocation().x-panel.getLocationOnScreen().x,MouseInfo.getPointerInfo().getLocation().y-panel.getLocationOnScreen().y);
+
+							if(Math.abs(b.getX()-a.getX()) < 25)
+								polygon.addPoint(new Point(center.getX()+radius,center.getY()));
+							else
+								polygon.addPoint(new Point(center.getX(),center.getY()+radius));
+
 							clear();
 							lineRasterizer.rasterize(polygon);
 							BufferedImage img = ((RasterBufferedImage)raster).getImg();

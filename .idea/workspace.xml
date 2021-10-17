@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a409ad6-943f-4e58-adf8-d26330adce95" name="Changes" comment="added redraw function">
+    <list default="true" id="3a409ad6-943f-4e58-adf8-d26330adce95" name="Changes" comment="added triangle&#10;added editing of points&#10;added removing points">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/Canvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CanvasMouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/CanvasMouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CanvasRasterBufferedImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/CanvasRasterBufferedImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Line.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Point.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/Polygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Polygon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/task1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/.idea/workspace.xml" afterDir="false" />
@@ -14,20 +13,11 @@
       <change beforePath="$PROJECT_DIR$/out/production/task1/Canvas$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/Canvas$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/task1/Canvas$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/Canvas$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/task1/Canvas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/Canvas.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/CanvasMouse$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/CanvasMouse$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/CanvasMouse$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/CanvasMouse$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/CanvasMouse$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/CanvasMouse$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/CanvasMouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/CanvasMouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/CanvasRasterBufferedImage$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/CanvasRasterBufferedImage$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/CanvasRasterBufferedImage$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/CanvasRasterBufferedImage$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/CanvasRasterBufferedImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/CanvasRasterBufferedImage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/task1/model/Line.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/model/Line.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/task1/model/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/model/Point.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/task1/model/Polygon.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/model/Polygon.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/rasterize/LineRasterizerGraphics.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/task1/rasterize/PolygonRasterizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/rasterize/PolygonRasterizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasterize/DottedLineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rasterize/DottedLineRasterizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasterize/LineRasterizerGraphics.java" beforeDir="false" afterPath="$PROJECT_DIR$/rasterize/FilledLineRasterizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasterize/PolygonRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rasterize/PolygonRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/task1/rasterize/DottedLineRasterizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/task1/rasterize/DottedLineRasterizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasterize/FilledLineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rasterize/FilledLineRasterizer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,7 +133,10 @@
       <workItem from="1634321878249" duration="6775000" />
       <workItem from="1634329666763" duration="1213000" />
       <workItem from="1634331362127" duration="2488000" />
-      <workItem from="1634374657451" duration="1625000" />
+      <workItem from="1634374657451" duration="4172000" />
+      <workItem from="1634381625289" duration="7140000" />
+      <workItem from="1634471037991" duration="1152000" />
+      <workItem from="1634472513713" duration="204000" />
     </task>
     <task id="LOCAL-00001" summary="added redraw function">
       <created>1634215785351</created>
@@ -152,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634215785351</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="added triangle&#10;added editing of points&#10;added removing points">
+      <created>1634377230779</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1634377230779</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,6 +172,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added redraw function" />
-    <option name="LAST_COMMIT_MESSAGE" value="added redraw function" />
+    <MESSAGE value="added triangle&#10;added editing of points&#10;added removing points" />
+    <option name="LAST_COMMIT_MESSAGE" value="added triangle&#10;added editing of points&#10;added removing points" />
   </component>
 </project>

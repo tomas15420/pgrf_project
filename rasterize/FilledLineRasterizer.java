@@ -19,7 +19,7 @@ public class FilledLineRasterizer extends LineRasterizer {
     @Override
     public void rasterize(int x1, int y1, int x2, int y2, int color) {
 
-        float k = (float)(y2-y1)/(float)(x2-x1+0.0001);
+        float k = (float)(y2-y1)/(float)(x2-x1);
         float q = y1-k*x1;
 
         if(Math.abs(y2-y1) < Math.abs(x2-x1)){
@@ -47,6 +47,8 @@ public class FilledLineRasterizer extends LineRasterizer {
 
             for(int y = y1; y <= y2; y ++) {
                 int x = (int)((y-q)/k);
+                if(x2-x1 == 0)
+                    x = x1;
                 raster.setPixel(x,y,color);
             }
         }
