@@ -69,17 +69,44 @@ public class Canvas {
 					Point mousePoint = new Point(e.getX(),e.getY());
 					switch (e.getButton()){
 						case MouseEvent.BUTTON1: {
-							currentPol.addPoint(new Point(e.getX(),e.getY()));
+							Point finalPoint = null;
+							if(drawMode == true && points.size() == 2){
+								Point a = points.get(0);
+								Point b = points.get(1);
+
+								int diameter = a.getDistanceToPoint(b);
+								int radius = diameter/2;
+								Point center = new Line(a,b).getCenterPoint();
+
+								Point vector = new Point(mousePoint.getX() - center.getX(),mousePoint.getY() - center.getY());
+								double vectorDistance = Math.sqrt(Math.pow(vector.getX(), 2)+Math.pow(vector.getY(),2));
+								if(vectorDistance*radius != 0){
+									Point normalVector = new Point(vector.getX()/vectorDistance*radius,vector.getY()/vectorDistance*radius);
+									int x = center.getX() + normalVector.getX();
+									int y = center.getY() + normalVector.getY();
+									if(x >= 0 && y >= 0 && x < panel.getWidth() && y < panel.getHeight()){
+										finalPoint = new Point(x,y);
+										currentPol.addPoint(finalPoint);
+										polygons.add(currentPol);
+										currentPol = new Polygon();
+									}
+
+								}
+							}
+							else {
+								finalPoint = new Point(e.getX(), e.getY());
+								currentPol.addPoint(finalPoint);
+							}
 							break;
 						}
 						case MouseEvent.BUTTON2:{
-							if(points.size() == 0 || editPoint == null) return;
+							if(points.size() == 0 || editPoint == null || drawMode == true) return;
 							currentPol.setPoint(mousePoint,points.indexOf(editPoint));
 							editPoint = null;
 							break;
 						}
 						case MouseEvent.BUTTON3:{
-							if(points.size() == 0) return;
+							if(points.size() == 0 || drawMode == true) return;
 							Line line = currentPol.getNearestLineToPoint(mousePoint);
 							Point addPoint;
 							if(line != null){
@@ -135,24 +162,49 @@ public class Canvas {
 				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight()){
 					List<Point> points = currentPol.getPoints();
 					if(points.size() == 0) return;
-
 					Point pointA = points.get(0);
-					if(editPoint != null){
-						pointA = editPoint;
-					}
-
 					Point pointB = points.get(points.size()-1);
 					Point mousePoint = new Point(e.getX(),e.getY());
 
-					if(e.getModifiersEx() == MouseEvent.BUTTON3_DOWN_MASK){
-						Line nearestLine = currentPol.getNearestLineToPoint(mousePoint);
-						pointA = nearestLine.getPoint1();
-						pointB = nearestLine.getPoint2();
+					if(drawMode == true && points.size() == 2){
+						if(e.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK){
+							Point a = points.get(0);
+							Point b = points.get(1);
+
+							int diameter = a.getDistanceToPoint(b);
+							int radius = diameter/2;
+							Point center = pointA = new Line(a,b).getCenterPoint();
+							Point vector = new Point(mousePoint.getX() - center.getX(),mousePoint.getY() - center.getY());
+							double vectorDistance = Math.sqrt(Math.pow(vector.getX(), 2)+Math.pow(vector.getY(),2));
+							if(vectorDistance*radius > 0) {
+								Point normalVector = new Point(vector.getX() / vectorDistance * radius, vector.getY() / vectorDistance * radius);
+
+								int x = center.getX() + normalVector.getX();
+								int y = center.getY() + normalVector.getY();
+								if(x >= 0 && y >= 0 && x < panel.getWidth() && y < panel.getHeight()){
+									pointB = new Point(x,y);
+
+									tempLine[0] = new Line(pointA, pointB);
+								}
+							}
+						}
+
+					}
+					else {
+						if(editPoint != null){
+							pointA = editPoint;
+						}
+						if(e.getModifiersEx() == MouseEvent.BUTTON3_DOWN_MASK){
+							Line nearestLine = currentPol.getNearestLineToPoint(mousePoint);
+							pointA = nearestLine.getPoint1();
+							pointB = nearestLine.getPoint2();
+						}
+						tempLine[0] = new Line(pointA,mousePoint,0x00FFFF);
+						if(e.getModifiersEx() != MouseEvent.BUTTON2_DOWN_MASK)
+							tempLine[1] = new Line(pointB,mousePoint,0x00FFFF);
+
 					}
 
-					tempLine[0] = new Line(pointA,mousePoint,0x00FFFF);
-					if(e.getModifiersEx() != MouseEvent.BUTTON2_DOWN_MASK)
-						tempLine[1] = new Line(pointB,mousePoint,0x00FFFF);
 
 					redraw();
 
@@ -197,32 +249,11 @@ public class Canvas {
 					}
 					case KeyEvent.VK_T:{
 						List<Point> points = currentPol.getPoints();
-						if(points.size() == 2){
-							Point a = points.get(0);
-							Point b = points.get(1);
-
-							int diameter = a.getDistanceToPoint(b);
-							int radius = diameter/2;
-							Point center = new Line(a,b).getCenterPoint();
-							Point mousePoint = new Point(MouseInfo.getPointerInfo().getLocation().x-panel.getLocationOnScreen().x,MouseInfo.getPointerInfo().getLocation().y-panel.getLocationOnScreen().y);
-
-							Point vector = new Point(mousePoint.getX() - center.getX(),mousePoint.getY() - center.getY());
-							double vectorDistance = Math.sqrt(Math.pow(vector.getX(), 2)+Math.pow(vector.getY(),2));
-							Point normalVector = new Point(vector.getX()/vectorDistance*radius,vector.getY()/vectorDistance*radius);
-							Point finalPoint = new Point(center.getX()+normalVector.getX(),center.getY()+normalVector.getY());
-
-							currentPol.addPoint(finalPoint);
-/*
-							if(Math.abs(b.getX()-a.getX()) < 25)
-								currentPol.addPoint(new Point(center.getX()+radius,center.getY()));
-							else
-								currentPol.addPoint(new Point(center.getX(),center.getY()+radius));
-*/
-							clear();
-							lineRasterizer.rasterize(currentPol);
-							BufferedImage img = ((RasterBufferedImage)raster).getImg();
-							img.getGraphics().drawOval(center.getX()-radius,center.getY()-radius,diameter,diameter);
-							panel.repaint();
+						if(points.size() == 0 && drawMode == false) {
+							drawMode = true;
+						}
+						else {
+							drawMode = !drawMode;
 						}
 						break;
 					}
@@ -245,7 +276,7 @@ public class Canvas {
 		}
 
 		BufferedImage img = ((RasterBufferedImage)raster).getImg();
-		img.getGraphics().drawString("Pro kreslení trojúhelníku, zadejte 2 body a stiskněte klávesu T",0, img.getHeight()-20);
+		img.getGraphics().drawString("Pro kreslení trojúhelníku, stiskněte T",0, img.getHeight()-20);
 		img.getGraphics().drawString("Kreslíte polygon č. "+polygons.size() + ", stiskněte P pro další polygon, DELETE pro odstranění předchozího polygonu, C pro vymazání plátna",0,img.getHeight()-5);
 		panel.repaint();
 	}

@@ -34,8 +34,10 @@ public class DottedLineRasterizer extends LineRasterizer {
 
     @Override
     public void rasterize(int x1, int y1, int x2, int y2, int color) {
+        int dx = (x2-x1);
+        int dy = (y2-y1);
 
-        float k = (float)(y2-y1)/(float)(x2-x1);
+        float k = (float)dx/dy;
         float q = y1-k*x1;
 
         if(Math.abs(y2-y1) < Math.abs(x2-x1)){
@@ -57,7 +59,7 @@ public class DottedLineRasterizer extends LineRasterizer {
 
             for(int y = y1; y <= y2; y += space) {
                 int x = (int)((y-q)/k);
-                if(x2-x1 == 0)
+                if(dx == 0)
                     x = x1;
                 raster.setPixel(x,y,color);
             }

@@ -37,6 +37,7 @@ public class Point {
     public boolean equals(Point point){
         return point.getX() == x && point.getY() == y;
     }
+
     @Override
     public String toString() {
         return String.format("[%d,%d]",getX(),getY());
