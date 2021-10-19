@@ -6,12 +6,10 @@ import rasterize.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 /**
  * trida pro kresleni na platno: zobrazeni pixelu
@@ -27,13 +25,14 @@ public class Canvas {
 	private Raster raster;
 	private LineRasterizer lineRasterizer;
 	private DottedLineRasterizer dottedLineRasterizer;
-	private Polygon polygon = new Polygon();
+	private Polygon currentPol = new Polygon();
+	private List<Polygon> polygons = new ArrayList<>();
 	private Line[] tempLine = new Line[2];
 	private Point editPoint;
+	private boolean drawMode = false; //False - Polygon | True = Trojúhelník
 
 	public Canvas(int width, int height) {
 		frame = new JFrame();
-
 
 		frame.setLayout(new BorderLayout());
 		frame.setTitle("UHK FIM PGRF : " + this.getClass().getName());
@@ -45,8 +44,6 @@ public class Canvas {
 		raster = new RasterBufferedImage(width, height);
 		lineRasterizer = new FilledLineRasterizer(raster);
 		dottedLineRasterizer = new DottedLineRasterizer(raster,3);
-
-
 
 		panel = new JPanel() {
 			private static final long serialVersionUID = 1L;
@@ -65,25 +62,25 @@ public class Canvas {
 		frame.setVisible(true);
 
 		panel.addMouseListener(new MouseAdapter() {
-			List<Point> points = polygon.getPoints();
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				List<Point> points = currentPol.getPoints();
 				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight()){
 					Point mousePoint = new Point(e.getX(),e.getY());
 					switch (e.getButton()){
 						case MouseEvent.BUTTON1: {
-							polygon.addPoint(new Point(e.getX(),e.getY()));
+							currentPol.addPoint(new Point(e.getX(),e.getY()));
 							break;
 						}
 						case MouseEvent.BUTTON2:{
 							if(points.size() == 0 || editPoint == null) return;
-							polygon.setPoint(mousePoint,points.indexOf(editPoint));
+							currentPol.setPoint(mousePoint,points.indexOf(editPoint));
 							editPoint = null;
 							break;
 						}
 						case MouseEvent.BUTTON3:{
 							if(points.size() == 0) return;
-							Line line = polygon.getNearestLineToPoint(mousePoint);
+							Line line = currentPol.getNearestLineToPoint(mousePoint);
 							Point addPoint;
 							if(line != null){
 								addPoint = line.getPoint2();
@@ -92,21 +89,40 @@ public class Canvas {
 								addPoint = points.get(0);
 							}
 
-							polygon.addPoint(mousePoint,points.indexOf(addPoint));
+							currentPol.addPoint(mousePoint,points.indexOf(addPoint));
 							break;
 						}
 					}
 				}
 				redraw();
 			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				List<Point> points = currentPol.getPoints();
+				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight() && points.size() != 0) {
+					if(e.getButton() == MouseEvent.BUTTON2){
+						Point mousePoint = new Point(e.getX(),e.getY());
+
+						Point nearestPoint = currentPol.getNearestPoint(mousePoint);
+						if(nearestPoint.getDistanceToPoint(mousePoint) < 5){
+							currentPol.removePoint(nearestPoint);
+							redraw();
+						}
+					}
+				}
+			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
+				List<Point> points = currentPol.getPoints();
+
 				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight() && points.size() != 0) {
 
 					Point mousePoint = new Point(e.getX(),e.getY());
 
 					if (e.getButton() == MouseEvent.BUTTON2) {
-						editPoint = polygon.getNearestPoint(mousePoint);
+						editPoint = currentPol.getNearestPoint(mousePoint);
 					}
 				}
 			}
@@ -117,7 +133,7 @@ public class Canvas {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				if(e.getX() >= 0 && e.getX() < panel.getWidth() && e.getY() >= 0 && e.getY() < panel.getHeight()){
-					List<Point> points = polygon.getPoints();
+					List<Point> points = currentPol.getPoints();
 					if(points.size() == 0) return;
 
 					Point pointA = points.get(0);
@@ -129,7 +145,7 @@ public class Canvas {
 					Point mousePoint = new Point(e.getX(),e.getY());
 
 					if(e.getModifiersEx() == MouseEvent.BUTTON3_DOWN_MASK){
-						Line nearestLine = polygon.getNearestLineToPoint(mousePoint);
+						Line nearestLine = currentPol.getNearestLineToPoint(mousePoint);
 						pointA = nearestLine.getPoint1();
 						pointB = nearestLine.getPoint2();
 					}
@@ -151,12 +167,36 @@ public class Canvas {
 			public void keyPressed(KeyEvent e) {
 				switch(e.getKeyCode()){
 					case KeyEvent.VK_C:{
-						polygon.reset();
+						currentPol.reset();
+						for(Polygon pol : polygons){
+							pol.reset();
+						}
+						polygons.clear();
 						redraw();
 						break;
 					}
+					case KeyEvent.VK_P:{
+						if(currentPol.getPoints().size() > 2){
+							polygons.add(currentPol);
+							currentPol = new Polygon();
+							redraw();
+						}
+						break;
+					}
+					case KeyEvent.VK_DELETE:{
+						if(currentPol.getPoints().size() > 0){
+							currentPol = new Polygon();
+						}
+						else{
+							if(polygons.size() > 0){
+								polygons.remove(polygons.size()-1);
+							}
+						}
+
+						redraw();
+					}
 					case KeyEvent.VK_T:{
-						List<Point> points = polygon.getPoints();
+						List<Point> points = currentPol.getPoints();
 						if(points.size() == 2){
 							Point a = points.get(0);
 							Point b = points.get(1);
@@ -164,16 +204,22 @@ public class Canvas {
 							int diameter = a.getDistanceToPoint(b);
 							int radius = diameter/2;
 							Point center = new Line(a,b).getCenterPoint();
+							Point mousePoint = new Point(MouseInfo.getPointerInfo().getLocation().x-panel.getLocationOnScreen().x,MouseInfo.getPointerInfo().getLocation().y-panel.getLocationOnScreen().y);
 
-//							Point mousePoint = new Point(MouseInfo.getPointerInfo().getLocation().x-panel.getLocationOnScreen().x,MouseInfo.getPointerInfo().getLocation().y-panel.getLocationOnScreen().y);
+							Point vector = new Point(mousePoint.getX() - center.getX(),mousePoint.getY() - center.getY());
+							double vectorDistance = Math.sqrt(Math.pow(vector.getX(), 2)+Math.pow(vector.getY(),2));
+							Point normalVector = new Point(vector.getX()/vectorDistance*radius,vector.getY()/vectorDistance*radius);
+							Point finalPoint = new Point(center.getX()+normalVector.getX(),center.getY()+normalVector.getY());
 
+							currentPol.addPoint(finalPoint);
+/*
 							if(Math.abs(b.getX()-a.getX()) < 25)
-								polygon.addPoint(new Point(center.getX()+radius,center.getY()));
+								currentPol.addPoint(new Point(center.getX()+radius,center.getY()));
 							else
-								polygon.addPoint(new Point(center.getX(),center.getY()+radius));
-
+								currentPol.addPoint(new Point(center.getX(),center.getY()+radius));
+*/
 							clear();
-							lineRasterizer.rasterize(polygon);
+							lineRasterizer.rasterize(currentPol);
 							BufferedImage img = ((RasterBufferedImage)raster).getImg();
 							img.getGraphics().drawOval(center.getX()-radius,center.getY()-radius,diameter,diameter);
 							panel.repaint();
@@ -187,13 +233,20 @@ public class Canvas {
 
 	private void redraw(){
 		clear();
-		lineRasterizer.rasterize(polygon);
+		lineRasterizer.rasterize(currentPol);
+		for(Polygon pol : polygons){
+			lineRasterizer.rasterize(pol);
+		}
 
 		for(Line line : tempLine){
 			if(line != null){
 				dottedLineRasterizer.rasterize(line);
 			}
 		}
+
+		BufferedImage img = ((RasterBufferedImage)raster).getImg();
+		img.getGraphics().drawString("Pro kreslení trojúhelníku, zadejte 2 body a stiskněte klávesu T",0, img.getHeight()-20);
+		img.getGraphics().drawString("Kreslíte polygon č. "+polygons.size() + ", stiskněte P pro další polygon, DELETE pro odstranění předchozího polygonu, C pro vymazání plátna",0,img.getHeight()-5);
 		panel.repaint();
 	}
 

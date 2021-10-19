@@ -27,9 +27,6 @@ public class FilledLineRasterizer extends LineRasterizer {
                 int tmp = x1;
                 x1 = x2;
                 x2 = tmp;
-                tmp = y1;
-                y1 = y2;
-                y2 = tmp;
             }
             for(int x = x1; x <= x2; x ++) {
                 int y = (int)(k*x+q);
@@ -37,10 +34,7 @@ public class FilledLineRasterizer extends LineRasterizer {
             }
         } else{
             if(y2 < y1){
-                int tmp = x1;
-                x1 = x2;
-                x2 = tmp;
-                tmp = y1;
+                int tmp = y1;
                 y1 = y2;
                 y2 = tmp;
             }

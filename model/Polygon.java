@@ -51,7 +51,11 @@ public class Polygon {
     }
 
     public void reset(){
-        points.removeAll(points);
+        points.clear();
+    }
+
+    public void removePoint(Point point){
+        points.remove(point);
     }
 
     public List<Point> getPoints() {
