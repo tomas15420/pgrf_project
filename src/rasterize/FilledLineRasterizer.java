@@ -1,20 +1,12 @@
-package rasterize;
-
-import model.Line;
+package src.rasterize;
 
 import java.awt.*;
 
-public class DottedLineRasterizer extends LineRasterizer {
+public class FilledLineRasterizer extends LineRasterizer {
 
-    private int space = 2;
 
-    public DottedLineRasterizer(Raster raster) {
+    public FilledLineRasterizer(Raster raster) {
         super(raster);
-    }
-
-    public DottedLineRasterizer(Raster raster, int space){
-        super(raster);
-        this.space = space;
     }
 
     @Override
@@ -24,20 +16,10 @@ public class DottedLineRasterizer extends LineRasterizer {
         g.drawLine(x1, y1, x2, y2);
     }
 
-    public int getSpace() {
-        return space;
-    }
-
-    public void setSpace(int space) {
-        this.space = space;
-    }
-
     @Override
     public void rasterize(int x1, int y1, int x2, int y2, int color) {
-        int dx = (x2-x1);
-        int dy = (y2-y1);
 
-        float k = (float)dx/dy;
+        float k = (float)(y2-y1)/(float)(x2-x1);
         float q = y1-k*x1;
 
         if(Math.abs(y2-y1) < Math.abs(x2-x1)){
@@ -46,7 +28,7 @@ public class DottedLineRasterizer extends LineRasterizer {
                 x1 = x2;
                 x2 = tmp;
             }
-            for(int x = x1; x <= x2; x += space) {
+            for(int x = x1; x <= x2; x ++) {
                 int y = (int)(k*x+q);
                 raster.setPixel(x,y,color);
             }
@@ -57,9 +39,9 @@ public class DottedLineRasterizer extends LineRasterizer {
                 y2 = tmp;
             }
 
-            for(int y = y1; y <= y2; y += space) {
+            for(int y = y1; y <= y2; y ++) {
                 int x = (int)((y-q)/k);
-                if(dx == 0)
+                if(x2-x1 == 0)
                     x = x1;
                 raster.setPixel(x,y,color);
             }

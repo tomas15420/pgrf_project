@@ -1,4 +1,4 @@
-package rasterize;
+package src.rasterize;
 
 public interface Raster {
 

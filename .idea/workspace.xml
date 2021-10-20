@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a409ad6-943f-4e58-adf8-d26330adce95" name="Changes" comment="added dynamic triangle&#10;added multiple polygons">
-      <change afterPath="$PROJECT_DIR$/model/Triangle.java" afterDir="false" />
+    <list default="true" id="3a409ad6-943f-4e58-adf8-d26330adce95" name="Changes" comment="bug fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/Canvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/model/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasterize/DottedLineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rasterize/DottedLineRasterizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rasterize/FilledLineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rasterize/FilledLineRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Line.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Polygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Polygon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/Triangle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasterize/DottedLineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/DottedLineRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasterize/FilledLineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/FilledLineRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasterize/LineRasterizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/LineRasterizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasterize/Raster.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/Raster.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rasterize/RasterBufferedImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/rasterize/RasterBufferedImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/Panel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Panel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +146,14 @@
       <workItem from="1634645181901" duration="1901000" />
       <workItem from="1634653939791" duration="2042000" />
       <workItem from="1634662224155" duration="3056000" />
-      <workItem from="1634668901814" duration="477000" />
+      <workItem from="1634668901814" duration="1227000" />
+      <workItem from="1634670154962" duration="563000" />
+      <workItem from="1634673534083" duration="89000" />
+      <workItem from="1634673653724" duration="101000" />
+      <workItem from="1634709905445" duration="1261000" />
+      <workItem from="1634713457387" duration="6000" />
+      <workItem from="1634716268761" duration="469000" />
+      <workItem from="1634717092726" duration="1202000" />
     </task>
     <task id="LOCAL-00001" summary="added redraw function">
       <created>1634215785351</created>
@@ -162,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1634654799110</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added triangle class">
+      <created>1634669398469</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1634669398469</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,6 +205,8 @@
     <MESSAGE value="added redraw function" />
     <MESSAGE value="added triangle&#10;added editing of points&#10;added removing points" />
     <MESSAGE value="added dynamic triangle&#10;added multiple polygons" />
-    <option name="LAST_COMMIT_MESSAGE" value="added dynamic triangle&#10;added multiple polygons" />
+    <MESSAGE value="added triangle class" />
+    <MESSAGE value="bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fixes" />
   </component>
 </project>

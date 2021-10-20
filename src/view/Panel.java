@@ -1,7 +1,7 @@
-package view;
+package src.view;
 
-import rasterize.Raster;
-import rasterize.RasterBufferedImage;
+import src.rasterize.Raster;
+import src.rasterize.RasterBufferedImage;
 
 import javax.swing.*;
 import java.awt.*;

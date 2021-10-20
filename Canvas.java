@@ -1,7 +1,7 @@
-import model.Line;
-import model.Point;
-import model.Polygon;
-import rasterize.*;
+import src.model.Line;
+import src.model.Point;
+import src.model.Polygon;
+import src.rasterize.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -69,7 +69,6 @@ public class Canvas {
 					Point mousePoint = new Point(e.getX(),e.getY());
 					switch (e.getButton()){
 						case MouseEvent.BUTTON1: {
-							Point finalPoint = null;
 							if(drawMode == true && points.size() == 2){
 								Point a = points.get(0);
 								Point b = points.get(1);
@@ -85,17 +84,14 @@ public class Canvas {
 									int x = center.getX() + normalVector.getX();
 									int y = center.getY() + normalVector.getY();
 									if(x >= 0 && y >= 0 && x < panel.getWidth() && y < panel.getHeight()){
-										finalPoint = new Point(x,y);
-										currentPol.addPoint(finalPoint);
+										currentPol.addPoint(new Point(x,y));
 										polygons.add(currentPol);
 										currentPol = new Polygon();
 									}
-
 								}
 							}
 							else {
-								finalPoint = new Point(e.getX(), e.getY());
-								currentPol.addPoint(finalPoint);
+								currentPol.addPoint(new Point(e.getX(), e.getY()));
 							}
 							break;
 						}
@@ -204,8 +200,6 @@ public class Canvas {
 							tempLine[1] = new Line(pointB,mousePoint,0x00FFFF);
 
 					}
-
-
 					redraw();
 
 					tempLine = new Line[2];
@@ -231,8 +225,9 @@ public class Canvas {
 						if(currentPol.getPoints().size() > 2){
 							polygons.add(currentPol);
 							currentPol = new Polygon();
-							redraw();
 						}
+						drawMode = false;
+						redraw();
 						break;
 					}
 					case KeyEvent.VK_DELETE:{
@@ -246,10 +241,15 @@ public class Canvas {
 						}
 
 						redraw();
+						break;
 					}
 					case KeyEvent.VK_T:{
 						List<Point> points = currentPol.getPoints();
-						if(points.size() == 0 && drawMode == false) {
+						if(drawMode == false) {
+							if(points.size() > 2){
+								polygons.add(currentPol);
+								currentPol = new Polygon();
+							}
 							drawMode = true;
 						}
 						else {

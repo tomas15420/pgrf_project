@@ -1,4 +1,4 @@
-package rasterize;
+package src.rasterize;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
